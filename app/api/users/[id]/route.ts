@@ -1,12 +1,16 @@
 import User from "@/app/lib/model/user";
-import { NextResponse } from "next/server";
+import verifyJwt from "@/app/middleware";
+import { NextRequest, NextResponse } from "next/server";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const GET = async (request: Request, context: { params: any }) => {
+export const GET = async (request: NextRequest, context: { params: any }) => {
+  const user = verifyJwt(request);
+  if (user instanceof NextResponse) return user;
+
   const userId = context.params.id;
 
   try {
-    const result = await User.findById({ _id:userId });
+    const result = await User.findById({ _id: userId });
     return new NextResponse(
       JSON.stringify({ message: "User data fetched", user: result })
     );
