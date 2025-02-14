@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import { Types } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
-const generateAccessToken = (
+export const generateAccessToken = (
   _id: Types.ObjectId,
   email: string | undefined
 ) => {
