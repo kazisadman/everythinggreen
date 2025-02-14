@@ -24,7 +24,7 @@ export const POST = async (req: Request) => {
       JSON.stringify({ message: "User is created", user: result })
     );
   } catch (error:any) {
-    return new NextResponse("Error while creating user" + error.message, {
+    return new NextResponse("Error while creating user " + error.message, {
       status: 500,
     });
   }
