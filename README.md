@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# Next.js API
 
-First, run the development server:
 
+## Project Description
+This project implements the following features :
+1. **User API**:
+   - `GET /api/users`: Fetch all users.
+   - `POST /api/users`: Add a new user (name, email, password).
+   - `GET /api/users/:id`: Fetch a single user by ID.
+   - `POST /api/login`: Login user (email,password)
+   - `POST /api/logout`: Logout user
+   - **Authentication**: Secured using JWT.
+
+2. **Webhook Endpoint**:
+   - `POST /api/webhook`: Processes incoming requests, validates the signature, and stores data in `db.json`.
+
+---
+
+## Tech Stack
+- **Framework**: Next Js
+- **Database**: MongoDB (NoSQL database)
+- **Authentication**: JSON Web Token (JWT) for secure API access
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kazisadman/everythinggreen
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd everythinggreen
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Set up environment variables:
+   Create a `.env` file in the root directory and add the following:
+   ```env
+   MONGODB_URI = your-mongodb-uri-with-username-and-password
+   ACCESS_TOKEN_SECRET = your-jwt-secret
+   WEBHOOK_SECRET_KEY = your-secret-key
+   ```
+
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+6. The API will be available at `http://localhost:3000`.
+# API Documentation
+
+## User API
+
+**Fetch All Users:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+GET /api/users
+```
+**Add New User:**
+```bash
+POST /api/users
+```
+```bash
+Body: { "name": "John", "email": "john@example.com", "password": "password123" }
+```
+**Fetch Single User:**
+```bash
+GET /api/users/:id
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Webhook Endpoint
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Process Webhook:**
+```bash
+POST /api/webhook
+```
+```bash
+Headers: { "x-signature": "<computed-signature>" },{"Content-Type":"application/json"}
+```
+```bash
+Body: { "eventType": "test", "data": { "key": "value" } }
+```
+## Note:
+* The application uses a **db.json** file to store data. This file is automatically created when the application runs.
